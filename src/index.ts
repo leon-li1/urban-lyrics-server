@@ -158,4 +158,6 @@ const blockedUrls = [
 // then it will be accessible from http://333.333.3.3:8000
 // say we have a website domain on 333.333.3.3 called leonswebsite.com with port redirection 8000 -> 80
 // then it will be accessible from http://leonswebsite.com
-app.listen(8000, () => console.log("Server started on http://localhost:8000"));
+app.listen(process.env.PORT || 8000, () =>
+  console.log("Server started on http://localhost:8000")
+);
