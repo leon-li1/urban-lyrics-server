@@ -48,7 +48,10 @@ async function scrapeLyrics(title: string): Promise<LyricResult> {
   // 1. search google.com
   // 2. click on the first link
   // 3. grab the lyrics from the newly loaded page
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: ["--no-sandbox"],
+  });
   const page = await browser.newPage();
   try {
     await page.setRequestInterception(true);
