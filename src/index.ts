@@ -68,8 +68,7 @@ async function scrapeLyrics(title: string): Promise<LyricResult> {
       const requestUrl: string = (request as any)._url
         .split("?")[0]
         .split("#")[0];
-      // requestUrl = mywebsite.com/page
-      // resource = mywebsite.com
+      // Example: requestUrl = mywebsite.com/page, resource = mywebsite.com
       if (
         skippedResources.some((resource) => requestUrl.indexOf(resource) !== -1)
       ) {
