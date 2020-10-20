@@ -158,7 +158,7 @@ const blockedUrls = [
 // say we run this from this ip address: 333.333.3.3, then it will be accessible from http://333.333.3.3:8000
 // say we have a website domain on 333.333.3.3 called leonswebsite.com with port redirection 8000 -> 80
 // then it will be accessible from http://leonswebsite.com
-app.listen(8000, async function () {
+app.listen(process.env.PORT || 8000, async function () {
   console.log("Server started.");
   globalBrowser = await puppeteer.launch({
     headless: true,
