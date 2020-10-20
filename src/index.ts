@@ -161,7 +161,7 @@ const blockedUrls = [
 app.listen(8000, async function () {
   console.log("Server started.");
   globalBrowser = await puppeteer.launch({
-    headless: false,
+    headless: true,
     args: ["--no-sandbox"],
   });
 });
