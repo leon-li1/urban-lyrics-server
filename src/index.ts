@@ -3,6 +3,8 @@ import * as puppeteer from "puppeteer";
 import * as bodyParser from "body-parser";
 import * as cors from "cors";
 
+let globalBrowser: puppeteer.Browser;
+
 // create the server object
 const app = express();
 // .use() will run the given middleware on every request
@@ -48,11 +50,8 @@ async function scrapeLyrics(title: string): Promise<LyricResult> {
   // 1. search google.com
   // 2. click on the first link
   // 3. grab the lyrics from the newly loaded page
-  const browser = await puppeteer.launch({
-    headless: true,
-    args: ["--no-sandbox"],
-  });
-  const page = await browser.newPage();
+
+  const page = await globalBrowser.newPage();
   try {
     await page.setRequestInterception(true);
     let skippedResources = blockedUrls;
@@ -68,8 +67,7 @@ async function scrapeLyrics(title: string): Promise<LyricResult> {
       const requestUrl: string = (request as any)._url
         .split("?")[0]
         .split("#")[0];
-      // requestUrl = mywebsite.com/page
-      // resource = mywebsite.com
+      // Example: requestUrl = mywebsite.com/page, resource = mywebsite.com
       if (
         skippedResources.some((resource) => requestUrl.indexOf(resource) !== -1)
       ) {
@@ -116,7 +114,7 @@ async function scrapeLyrics(title: string): Promise<LyricResult> {
       geniusUrl,
     };
   } finally {
-    browser.close();
+    page.close();
   }
 }
 
@@ -157,10 +155,13 @@ const blockedUrls = [
   "gumgum.com",
 ];
 
-// say we run this from this ip address: 333.333.3.3
-// then it will be accessible from http://333.333.3.3:8000
+// say we run this from this ip address: 333.333.3.3, then it will be accessible from http://333.333.3.3:8000
 // say we have a website domain on 333.333.3.3 called leonswebsite.com with port redirection 8000 -> 80
 // then it will be accessible from http://leonswebsite.com
-app.listen(process.env.PORT || 8000, () =>
-  console.log("Server started on http://localhost:8000")
-);
+app.listen(8000, async function () {
+  console.log("Server started.");
+  globalBrowser = await puppeteer.launch({
+    headless: false,
+    args: ["--no-sandbox"],
+  });
+});
