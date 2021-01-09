@@ -19,7 +19,7 @@
     "dotenv-cli": "^4.0.0",
     "dotenv-webpack": "^3.0.0",
     "express": "^4.17.1",
-    "lyrics-finder": "^21.4.0",
+    "genius-lyrics-api": "^3.0.5",
     "puppeteer": "^5.3.1",
     "ts-node-dev": "^1.0.0-pre.63",
     "typescript": "^4.0.3"
