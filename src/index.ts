@@ -1,11 +1,8 @@
 import * as express from "express";
-import * as puppeteer from "puppeteer";
 import * as bodyParser from "body-parser";
 import * as cors from "cors";
 import axios from "axios";
-import { getLyrics, getSongById } from "genius-lyrics-api";
-
-let globalBrowser: puppeteer.Browser;
+import { getLyrics } from "genius-lyrics-api";
 
 const app = express();
 app.use(cors());
@@ -69,47 +66,6 @@ async function scrapeLyrics(title: string): Promise<LyricResult> {
   }
 }
 
-const blockedUrls = [
-  "ping.chartbeat.net",
-  "librato-collector.genius.com",
-  "api.mixpanel.com",
-  "is1-ssl.mzstatic.com",
-  "www.youtube.com",
-  "connect.facebook.net",
-  "sessions.bugsnag.com",
-  "stats.g.doubleclick.net",
-  "pixel.quantserve.com",
-  "loadus.exelator.com",
-  "api-js.mixpanel.com",
-  "stats.pusher.com",
-  "js-cdn.music.apple.com",
-  "cds.taboola.com",
-  "dialog.filepicker.io",
-  "sb.scorecardresearch.com",
-  "www.filepicker.io",
-  "cdn.mxpnl.com",
-  "trc.taboola.com",
-  "www.google-analytics.com",
-  "audio-ssl.itunes.apple.com",
-  "secure.quantserve.com",
-  "ws.pusherapp.com",
-  "t2.genius.com",
-  "cdn.taboola.com",
-  "static.chartbeat.com",
-  "pubmatic.com",
-  "adsymptotic.com",
-  "adsby.bidtheatre.com",
-  "s.amazon-adsystem.com",
-  "simpli.fi",
-  "tapad.com",
-  "googlesyndication.com",
-  "gumgum.com",
-];
-
 app.listen(process.env.PORT || 8000, async function () {
   console.log("Server started.");
-  globalBrowser = await puppeteer.launch({
-    headless: true,
-    args: ["--no-sandbox"],
-  });
 });
